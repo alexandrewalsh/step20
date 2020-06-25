@@ -21,27 +21,57 @@ var facts = [
     "Fact 3!"
 ];
 
+//correct answers of facts.
+var ans = [ //1 for true, 0 for false
+    1,
+    0,
+    1
+]
+
+var currentFact;    //stores the array pos of the current fact being displayed
+
 function firstFact() {
-    document.getElementById('fact-container').innerHTML = facts[Math.floor(Math.random() * facts.length)];
+    currentFact = Math.floor(Math.random() * facts.length);
+    document.getElementById('fact-container').innerHTML = facts[currentFact];
 }
 
 /**
  * Responds based on whether "True" or "False" button is pressed
  */
-function addRandomGreeting(tf) {
+function tfPressed(tf) {
+    const factContainer = document.getElementById('fact-container');
+    const answerContainer = document.getElementById('answer-container');
 
-  // Pick a random fact.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
+    //process current fact, display correct or incorrect based on which button was pressed
+    if (tf) //true was pressed
+    {
+        
+        if(ans[currentFact]) {  //correct answer is true
+        
+            
+            answerContainer.innerText = "correct!";
+        }
+        else {                  //correct answer is false
+            answerContainer.innerText = "incorrect!";
+        }
+    }
+    else
+    {
+        if(ans[currentFact]) {  //correct answer is true
+        
+            
+            answerContainer.innerText = "incorrect!";
+        }
+        else {                  //correct answer is false
+            answerContainer.innerText = "correct!";
+        }
+    }
 
-  // Add it to the page.
-  if (tf)
-  {
-    const answerContainer = document.getElementById('fact-container');
-    answerContainer.innerText = fact;
-  }
-  else
-  {
-    const answerContainer = document.getElementById('fact-container');
-    answerContainer.innerText = "wrong!";
-  }
+    //For new fact: 
+        // Pick a random fact.
+    currentFact = Math.floor(Math.random() * facts.length);
+    const fact = facts[currentFact];
+        // Add it to the page.
+    factContainer.innerText = fact;
+
 }
