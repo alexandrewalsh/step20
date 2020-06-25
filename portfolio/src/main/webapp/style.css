@@ -12,7 +12,7 @@ img {
 	width: auto;
 	margin: 0 auto;
 	clear: both;
-  display: flex;
+    display: flex;
 }
 
 #left-text {
@@ -23,6 +23,22 @@ img {
 	display: block;
 }
 
+#buttons {
+    width: auto;
+	margin: 0 auto;
+	clear: both;
+    display: flex;
+}
+
+#b1 {
+    padding: 0 50px 0 25px;
+}
+
+#b2 {
+    padding: 0 0 50px 0;
+}
+
 #greeting-container {
-  margin-top: 20px;
+  margin-top: 5px;
+  margin-left: 75px;
 }
