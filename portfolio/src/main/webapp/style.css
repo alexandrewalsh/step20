@@ -23,6 +23,12 @@ img {
 	display: block;
 }
 
+#fact-container {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 75px;
+}
+
 #buttons {
     width: auto;
 	margin: 0 auto;
@@ -38,7 +44,7 @@ img {
     padding: 0 0 50px 0;
 }
 
-#greeting-container {
-  margin-top: 5px;
-  margin-left: 75px;
+#answer-container {
+    margin-top: 5px;
+    margin-left: 75px;
 }

@@ -13,24 +13,35 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Show random fact on page load
+ */
+var facts = [
+    "Fact 1.",
+    "Fact 2?",
+    "Fact 3!"
+];
+
+function firstFact() {
+    document.getElementById('fact-container').innerHTML = facts[Math.floor(Math.random() * facts.length)];
+}
+
+/**
+ * Responds based on whether "True" or "False" button is pressed
  */
 function addRandomGreeting(tf) {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  // Pick a random fact.
+  const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
   if (tf)
   {
-    const greetingContainer = document.getElementById('greeting-container');
-    greetingContainer.innerText = "True!";
+    const answerContainer = document.getElementById('fact-container');
+    answerContainer.innerText = fact;
   }
   else
   {
-    const greetingContainer = document.getElementById('greeting-container');
-    greetingContainer.innerText = "False!";
+    const answerContainer = document.getElementById('fact-container');
+    answerContainer.innerText = "wrong!";
   }
 }
