@@ -16,16 +16,30 @@
  * Show random fact on page load
  */
 var facts = [
-    "Fact 1.",
-    "Fact 2?",
-    "Fact 3!"
+    "I have been to Costa Rica",
+    "This is my first internship",
+    "I have 2 brothers",
+    "My parents met in Wales",
+    "I go to UCLA",
+    "I have 1 sister",
+    "I have visited a Google office",
+    "My favorite color is green",
+    "Basketball is my least favorite sport",
+    "I was born in the USA"
 ];
 
 //correct answers of facts.
 var ans = [ //1 for true, 0 for false
     1,
+    1,
+    1,
+    1,
+    1,
     0,
-    1
+    0,
+    0,
+    0,
+    0
 ]
 
 var currentFact;    //stores the array pos of the current fact being displayed
@@ -69,7 +83,11 @@ function tfPressed(tf) {
 
     //For new fact: 
         // Pick a random fact.
-    currentFact = Math.floor(Math.random() * facts.length);
+        const lastFact = currentFact;
+        do
+        {
+            currentFact = Math.floor(Math.random() * facts.length);
+        } while(lastFact == currentFact)
     const fact = facts[currentFact];
         // Add it to the page.
     factContainer.innerText = fact;
