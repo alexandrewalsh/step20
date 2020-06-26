@@ -23,25 +23,19 @@ img {
 	display: block;
 }
 
+#table {
+    display: table;
+    width: 25%;
+}
+
 #fact-container {
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 75px;
+    display: table-cell;
 }
 
-#buttons {
-    width: auto;
-	margin: 0 auto;
-	clear: both;
-    display: flex;
-}
-
-#b1 {
-    padding: 0 50px 0 25px;
-}
-
-#b2 {
-    padding: 0 0 50px 0;
+#b1, #b2 {
+    display: table-cell;
+    width: 100px;
+    float: right;
 }
 
 #answer-container {
