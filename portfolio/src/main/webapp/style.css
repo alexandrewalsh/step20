@@ -1,50 +1,50 @@
-
 body {
   background-color: #fefbd8;
 }
 
 img {
-	height: 400px;
-	width: 500px;
+  width: 216px;
+  height: 288px;
+  vertical-align: middle;
 }
 
 #content {
-	width: auto;
-	margin: 0 auto;
-	clear: both;
-    display: flex;
+  width: auto;
+  margin: 0 auto;
+  clear: both;
+  display: flex;
 }
 
 #left-text {
-    vertical-align:middle;
+  vertical-align: middle;
 }
 
-#right-pic > img{
-	display: block;
+#right-pic > img {
+  display: block;
 }
 
 #fact-container {
-    grid-area: header;
+  grid-area: header;
 }
 
 #b1 {
-    grid-area: main;
+  grid-area: main;
 }
 
 #b2 {
-    grid-area: sidebar;
+  grid-area: sidebar;
 }
 
 #answer-container {
-    grid-area: footer;
+  grid-area: footer;
 }
 
 #grid {
-    display: grid;
-    grid-template-columns: 50px 50px 50px 50px;
-    grid-template-rows: auto;
-    grid-template-areas:
-        "header header header header"
-        "main main . sidebar"
-        ". footer footer .";
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'header header header header'
+    'main main . sidebar'
+    '. footer footer .';
 }
