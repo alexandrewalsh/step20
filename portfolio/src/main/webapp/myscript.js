@@ -82,3 +82,9 @@ function buttonPressed(truePressed) {  // eslint-line-disable no-unused-vars
   // Add it to the page.
   factContainer.innerText = fact;
 }
+
+function getRandomQuoteUsingArrowFunctions() {
+  fetch('/random-quote').then(response => response.text()).then((quote) => {
+    document.getElementById('quote-container').innerText = quote;
+  });
+}
