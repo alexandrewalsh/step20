@@ -24,7 +24,7 @@ var facts = [
     "I have 1 sister",
     "I have visited a Google office",
     "My favorite color is green",
-    "Basketball is my least favorite sport",
+    "Baseball is my favorite sport",
     "I was born in the USA"
 ];
 
