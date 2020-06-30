@@ -88,3 +88,9 @@ function getRandomQuoteUsingArrowFunctions() {
     document.getElementById('quote-container').innerText = quote;
   });
 }
+
+function getDataFromServlet() {
+    fetch('/data').then(response => response.json()).then((json) => {
+        document.getElementById('json-container').innerText = json;
+    });
+}
