@@ -15,81 +15,82 @@
 /**
  * Show random fact on page load
  */
-var facts = [
-    "I have been to Costa Rica",
-    "This is my first internship",
-    "I have 2 brothers",
-    "My parents met in Wales",
-    "I go to UCLA",
-    "I have 1 sister",
-    "I have visited a Google office",
-    "My favorite color is green",
-    "Baseball is my favorite sport",
-    "I was born in the USA"
+const facts = [
+  'I have been to Costa Rica',
+  'This is my first internship',
+  'I have 2 brothers',
+  'My parents met in Wales',
+  'I go to UCLA',
+  'I have 1 sister',
+  'I have visited a Google office',
+  'My favorite color is green',
+  'Baseball is my favorite sport',
+  'I was born in the USA',
 ];
 
-//correct answers of facts.
-var ans = [ //1 for true, 0 for false
-    1,
-    1,
-    1,
-    1,
-    1,
-    0,
-    0,
-    0,
-    0,
-    0
-]
+// correct answers of facts.
+const ans = [ // 1 for true, 0 for false
+  1,
+  1,
+  1,
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0];
 
-var currentFact;    //stores the array pos of the current fact being displayed
+let currentFact =
+    0;  // stores the array pos of the current fact being displayed
 
-function firstFact() {
-    currentFact = Math.floor(Math.random() * facts.length);
-    document.getElementById('fact-container').innerHTML = facts[currentFact];
+function firstFact() {  // eslint-line-disable no-unused-vars
+  currentFact = Math.floor(Math.random() * facts.length);
+  document.getElementById('fact-container').innerHTML = facts[currentFact];
 }
 
 /**
  * Responds based on whether "True" or "False" button is pressed
  */
-function tfPressed(tf) {
-    const factContainer = document.getElementById('fact-container');
-    const answerContainer = document.getElementById('answer-container');
+function buttonPressed(truePressed) {  // eslint-line-disable no-unused-vars
+  const factContainer = document.getElementById('fact-container');
+  const answerContainer = document.getElementById('answer-container');
 
-    //process current fact, display correct or incorrect based on which button was pressed
-    if (tf) //true was pressed
-    {
-        
-        if(ans[currentFact]) {  //correct answer is true
-        
-            
-            answerContainer.innerText = "correct!";
-        }
-        else {                  //correct answer is false
-            answerContainer.innerText = "incorrect!";
-        }
+  // process current fact, display correct or incorrect based on which button
+  // was pressed
+  if (truePressed) {         // true was pressed
+    if (ans[currentFact]) {  // correct answer is true
+      answerContainer.innerText = 'correct!';
+    } else {  // correct answer is false
+      answerContainer.innerText = 'incorrect!';
     }
-    else
-    {
-        if(ans[currentFact]) {  //correct answer is true
-        
-            
-            answerContainer.innerText = "incorrect!";
-        }
-        else {                  //correct answer is false
-            answerContainer.innerText = "correct!";
-        }
+  } else {
+    if (ans[currentFact]) {  // correct answer is true
+      answerContainer.innerText = 'incorrect!';
+    } else {  // correct answer is false
+      answerContainer.innerText = 'correct!';
     }
+  }
 
-    //For new fact: 
-        // Pick a random fact.
-        const lastFact = currentFact;
-        do
-        {
-            currentFact = Math.floor(Math.random() * facts.length);
-        } while(lastFact == currentFact)
-    const fact = facts[currentFact];
-        // Add it to the page.
-    factContainer.innerText = fact;
+  // For new fact:
+  // Pick a random fact.
+  const lastFact = currentFact;
+  do {
+    currentFact = Math.floor(Math.random() * facts.length);
+  } while (lastFact == currentFact);
+  const fact = facts[currentFact];
+  // Add it to the page.
+  factContainer.innerText = fact;
+}
 
+function getRandomQuoteUsingArrowFunctions() {
+  fetch('/random-quote').then(response => response.text()).then((quote) => {
+    document.getElementById('quote-container').innerText = quote;
+  });
+}
+
+function getDataFromServlet() {
+    fetch('/data').then(response => response.json()).then((json) => {
+        document.getElementById('json-container').innerText = json;
+    });
 }

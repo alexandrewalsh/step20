@@ -1,44 +1,54 @@
-
 body {
   background-color: #fefbd8;
 }
 
 img {
-	height: 400px;
-	width: 500px;
+  width: 216px;
+  height: 288px;
+  vertical-align: middle;
 }
 
 #content {
-	width: auto;
-	margin: 0 auto;
-	clear: both;
-    display: flex;
+  width: auto;
+  margin: 0 auto;
+  clear: both;
+  display: flex;
 }
 
 #left-text {
-    vertical-align:middle;
+  vertical-align: middle;
 }
 
-#right-pic > img{
-	display: block;
-}
-
-#table {
-    display: table;
-    width: 25%;
+#right-pic > img {
+  display: block;
 }
 
 #fact-container {
-    display: table-cell;
+  grid-area: header;
 }
 
-#b1, #b2 {
-    display: table-cell;
-    width: 100px;
-    float: right;
+#b1 {
+  grid-area: main;
+}
+
+#b2 {
+  grid-area: sidebar;
 }
 
 #answer-container {
-    margin-top: 5px;
-    margin-left: 75px;
+  grid-area: footer;
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: 50px 50px 50px 50px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'header header header header'
+    'main main . sidebar'
+    '. footer footer .';
+}
+
+#quote-container {
+  margin-top: 20px;
 }
