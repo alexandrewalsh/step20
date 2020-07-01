@@ -26,22 +26,27 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-
-    private List<String> comments;
-
-    @Override
+  private List<String> comments = new ArrayList<>();
+  private Gson gson = new Gson();
+/*
+  @Override
   public void init() {
-    comments = new ArrayList<>();
     comments.add("Yeehaw");
     comments.add("I am going to live forever or die trying!");
     comments.add("What is the average air-speed of an unladen swallow?");
   }
-
+*/
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      String json = convertToJsonUsingGson(comments);
+    String json = convertToJsonUsingGson(comments);
     response.setContentType("application/json");
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+      comments.add(request.getParameter("user-comment"));
+      response.sendRedirect("/index.html");
   }
 
   /**
@@ -49,7 +54,6 @@ public class DataServlet extends HttpServlet {
    * the Gson library dependency to pom.xml.
    */
   private String convertToJsonUsingGson(List<String> messages) {
-    Gson gson = new Gson();
     String json = gson.toJson(messages);
     return json;
   }

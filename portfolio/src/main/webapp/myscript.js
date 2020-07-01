@@ -39,7 +39,8 @@ const ans = [ // 1 for true, 0 for false
   0,
   0,
   0,
-  0];
+  0,
+];
 
 let currentFact =
     0;  // stores the array pos of the current fact being displayed
@@ -83,14 +84,22 @@ function buttonPressed(truePressed) {  // eslint-line-disable no-unused-vars
   factContainer.innerText = fact;
 }
 
-function getRandomQuoteUsingArrowFunctions() {
-  fetch('/random-quote').then(response => response.text()).then((quote) => {
+function
+getRandomQuoteUsingArrowFunctions() {  // eslint-line-disable no-unused-vars
+  fetch('/random-quote').then((response) => (response.text())).then((quote) => {
     document.getElementById('quote-container').innerText = quote;
   });
 }
 
-function getDataFromServlet() {
-    fetch('/data').then(response => response.json()).then((json) => {
-        document.getElementById('json-container').innerText = json;
-    });
+function getDataFromServlet() {  // eslint-line-disable no-unused-vars
+  var formattedJson = "";
+  fetch('/data').then((response) => (response.json())).then((json) => {
+      for(var i = 0; i < json.length; i++) {
+          formattedJson += json[i] + "\n";
+      }
+      document.getElementById('json-container').innerText = formattedJson;
+  });
 }
+/*
+
+*/
