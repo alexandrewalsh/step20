@@ -29,7 +29,8 @@ const facts = [
 ];
 
 // correct answers of facts.
-const ans = [ // 1 for true, 0 for false
+const ans = [
+  // 1 for true, 0 for false
   1,
   1,
   1,
@@ -91,15 +92,37 @@ getRandomQuoteUsingArrowFunctions() {  // eslint-line-disable no-unused-vars
   });
 }
 
+function loadComments() {
+    fetch('/data').then((response) => (response.json())).then((comments) => {
+        var formattedJson = ""
+        for (var i = 0; i < comments.length; i++) {
+            formattedJson += comments[i] + '\n';
+        }
+        document.getElementById('json-container').innerText = formattedJson;
+    });
+}
+
+/** Creates an element that represents a comment*/
+function createCommElement(comment) {
+    const commElement = document.createElement('li');
+    commElement.className = 'comment';
+
+    const titleElement = document.createElement('span');
+    titleElement.innerText = comment.user-comment;
+
+    commElement.appendChild(titleElement);
+    return commElement;
+}
+
+/*
 function getDataFromServlet() {  // eslint-line-disable no-unused-vars
   var formattedJson = "";
   fetch('/data').then((response) => (response.json())).then((json) => {
-      for(var i = 0; i < json.length; i++) {
-          formattedJson += json[i] + "\n";
-      }
-      document.getElementById('json-container').innerText = formattedJson;
+    for (var i = 0; i < json.length; i++) {
+      formattedJson += json[i] + '\n';
+    }
+    document.getElementById('json-container').innerText = formattedJson;
   });
 }
-/*
 
 */
