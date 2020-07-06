@@ -93,25 +93,25 @@ getRandomQuoteUsingArrowFunctions() {  // eslint-line-disable no-unused-vars
 }
 
 function loadComments() {
-    fetch('/data').then((response) => (response.json())).then((comments) => {
-        var formattedJson = ""
-        for (var i = 0; i < comments.length; i++) {
-            formattedJson += comments[i] + '\n';
-        }
-        document.getElementById('json-container').innerText = formattedJson;
-    });
+  fetch('/data?number=3').then((response) => (response.json())).then((comments) => {
+    var formattedJson = ''
+    for (var i = 0; i < comments.length; i++) {
+      formattedJson += comments[i] + '\n';
+    }
+    document.getElementById('json-container').innerText = formattedJson;
+  });
 }
 
 /** Creates an element that represents a comment*/
 function createCommElement(comment) {
-    const commElement = document.createElement('li');
-    commElement.className = 'comment';
+  const commElement = document.createElement('li');
+  commElement.className = 'comment';
 
-    const titleElement = document.createElement('span');
-    titleElement.innerText = comment.user-comment;
+  const titleElement = document.createElement('span');
+  titleElement.innerText = comment.user - comment;
 
-    commElement.appendChild(titleElement);
-    return commElement;
+  commElement.appendChild(titleElement);
+  return commElement;
 }
 
 /*

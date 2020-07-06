@@ -18,6 +18,7 @@ import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
@@ -46,12 +47,21 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
+    List<Entity> listOfComments = results.asList(FetchOptions.Builder.withLimit(Integer.parseInt(request.getParameter("number"))));
 
-    List <String> comments = new ArrayList<>();
-    for (Entity entity : results.asIterable()) {
+    List<String> comments = new ArrayList<>();
+    
+    for (Entity entity : listOfComments) {
         String comment = (String) entity.getProperty("user-comment");
         comments.add(comment);
     }
+
+    /*
+    for (Entity entity : results.asIterable()) {
+      String comment = (String) entity.getProperty("user-comment");
+      comments.add(comment);
+    }
+    */
 
     response.setContentType("application/json");
     response.getWriter().println(gson.toJson(comments));
@@ -63,12 +73,12 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     String user_comment = request.getParameter("user-comment");
     long timestamp = System.currentTimeMillis();
-    
+
     commentEntity.setProperty("user-comment", user_comment);
     commentEntity.setProperty("timestamp", timestamp);
     datastore.put(commentEntity);
 
-    //comments.add(userComment);
+    // comments.add(userComment);
     response.sendRedirect("/index.html");
   }
 }
