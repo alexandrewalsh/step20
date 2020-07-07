@@ -49,6 +49,10 @@ img {
     '. footer footer .';
 }
 
+#json-container {
+    grid-area: comment;
+}
+
 #quote-container {
   margin-top: 20px;
 }
