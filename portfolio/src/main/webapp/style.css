@@ -50,9 +50,22 @@ img {
 }
 
 #json-container {
-    grid-area: comment;
+  width: 50%;
+  float: left;
 }
 
 #quote-container {
   margin-top: 20px;
+}
+
+#comment-wrapper {
+  width: 100%;
+}
+
+#comment-container {
+  margin-left: 50%;
+}
+
+#delete {
+  margin-left: 75%;
 }

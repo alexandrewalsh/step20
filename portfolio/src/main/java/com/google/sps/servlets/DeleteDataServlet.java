@@ -14,11 +14,11 @@
 
 package com.google.sps.servlets;
 
-import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -31,31 +31,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /** Servlet that deals with updating and displaying comments section.*/
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
-
-  private Gson gson = new Gson();
-
-  // function called when /data is fetched (in myscript.js)
+  // function called when method POST is submitted (when button is pressed; see index.html)
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Comment");
     PreparedQuery results = datastore.prepare(query);
-    List<Entity> listOfComments = results.asList(
-        FetchOptions.Builder.withLimit(Integer.parseInt(request.getParameter("number"))));
 
-    List<Key> keys = new ArrayList<>();
-
-    for (Entity entity : listOfComments) {
-      Key key = (Key) entity.getProperty("Key");
-      keys.add(key);
+    for (Entity entity : results.asIterable()) {
+      datastore.delete(entity.getKey());
     }
-
-    datastore.delete(keys);
-
+    response.sendRedirect("/index.html");
   }
-  
 }

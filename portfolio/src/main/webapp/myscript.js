@@ -44,7 +44,7 @@ const ans = [
 ];
 
 // variable to store the number of comments to load, default 10
-var commentCount = 10;
+let commentCount = 10;
 
 // stores the array pos of the current fact being displayed
 let currentFact = 0;
@@ -107,24 +107,10 @@ getRandomQuoteUsingArrowFunctions() {  // eslint-line-disable no-unused-vars
  * database
  */
 function loadComments() {
-  fetchValue = '/data?number=' + commentCount;
+  const fetchValue = '/data?number=' + commentCount;
   fetch(fetchValue).then((response) => (response.json())).then((comments) => {
-    var formattedJson = ''
-    for (var i = 0; i < comments.length; i++) {
-      formattedJson += comments[i] + '\n';
-    }
-    document.getElementById('json-container').innerText = formattedJson;
-  });
-}
-
-/**
- * calls the DeleteDataServlet to delete all comments from the GCP database
- */
-function deleteComments() {
-    fetchValue = '/delete-data?number=' + commentCount;
-  fetch(fetchValue).then((response) => (response.json())).then((comments) => {
-    var formattedJson = ''
-    for (var i = 0; i < comments.length; i++) {
+    let formattedJson = '';
+    for (let i = 0; i < comments.length; i++) {
       formattedJson += comments[i] + '\n';
     }
     document.getElementById('json-container').innerText = formattedJson;
@@ -151,16 +137,3 @@ function createCommElement(comment) {
   commElement.appendChild(titleElement);
   return commElement;
 }
-
-/*
-function getDataFromServlet() {  // eslint-line-disable no-unused-vars
-  var formattedJson = "";
-  fetch('/data').then((response) => (response.json())).then((json) => {
-    for (var i = 0; i < json.length; i++) {
-      formattedJson += json[i] + '\n';
-    }
-    document.getElementById('json-container').innerText = formattedJson;
-  });
-}
-
-*/

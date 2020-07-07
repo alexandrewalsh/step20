@@ -40,34 +40,31 @@
     <button type="button" onclick="getRandomQuoteUsingArrowFunctions()">Fetch a quote!</button>
     <div id="quote-container"></div>
 
-    <form action="/data" method="POST">
+    <form action="/data" method="post">
       <p>Any Comments?</p>
-      <input type="text" name="user-comment" value="Add it here!" />
+      <input type="text" name="user-comment" value="Add a comment here!" />
       <br />
-      <input type="submit" />
+      <button type="submit">Submit comment</button>
     </form>
 
     <hr />
 
-    <div style="width: 100%">
-        <div style="width:50%; float: left">
-            <ul id="json-container"></ul>
-        </div>
-        <div style="margin-left: 50%">
-            Number of Comments to Display:<input
-                type="number"
-                name="commentNumber"
-                value="10"
-                min="1"
-                onchange="changeNumberOfCommentsDisplayed(this.value)"
-            />
-        </div>
-        <!-- TODO: Get delete to work.
-        <div style="margin-left: 75%">
-            <input type="submit" name="Delete" onclick="deleteComments()"/>
-        </div>
-        -->
+    <div id="comment-wrapper">
+      <ul id="json-container"></ul>
+      <div id="comment-container">
+        Number of Comments to Display:<input
+          type="number"
+          name="commentNumber"
+          value="10"
+          min="1"
+          onchange="changeNumberOfCommentsDisplayed(this.value)"
+        />
+      </div>
+      <div id="delete">
+        <form action="/delete-data" method="post">
+          <button type="submit">Delete all comments</button>
+        </form>
+      </div>
     </div>
-
   </body>
 </html>
