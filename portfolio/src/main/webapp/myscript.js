@@ -43,9 +43,15 @@ const ans = [
   0,
 ];
 
-let currentFact =
-    0;  // stores the array pos of the current fact being displayed
+// variable to store the number of comments to load, default 10
+var commentCount = 10;
 
+// stores the array pos of the current fact being displayed
+let currentFact = 0;
+
+/**
+ * function to display the first fact upon loading the html page in
+ */
 function firstFact() {  // eslint-line-disable no-unused-vars
   currentFact = Math.floor(Math.random() * facts.length);
   document.getElementById('fact-container').innerHTML = facts[currentFact];
@@ -85,6 +91,10 @@ function buttonPressed(truePressed) {  // eslint-line-disable no-unused-vars
   factContainer.innerText = fact;
 }
 
+/**
+ * fetches a random quotes from the RandomQuoteServlet, and displays it on the
+ * portfolio
+ */
 function
 getRandomQuoteUsingArrowFunctions() {  // eslint-line-disable no-unused-vars
   fetch('/random-quote').then((response) => (response.text())).then((quote) => {
@@ -92,14 +102,42 @@ getRandomQuoteUsingArrowFunctions() {  // eslint-line-disable no-unused-vars
   });
 }
 
+/**
+ * calls the DataServlet to load in the correct number of comments from the GCP
+ * database
+ */
 function loadComments() {
-  fetch('/data?number=3').then((response) => (response.json())).then((comments) => {
+  fetchValue = '/data?number=' + commentCount;
+  fetch(fetchValue).then((response) => (response.json())).then((comments) => {
     var formattedJson = ''
     for (var i = 0; i < comments.length; i++) {
       formattedJson += comments[i] + '\n';
     }
     document.getElementById('json-container').innerText = formattedJson;
   });
+}
+
+/**
+ * calls the DeleteDataServlet to delete all comments from the GCP database
+ */
+function deleteComments() {
+    fetchValue = '/delete-data?number=' + commentCount;
+  fetch(fetchValue).then((response) => (response.json())).then((comments) => {
+    var formattedJson = ''
+    for (var i = 0; i < comments.length; i++) {
+      formattedJson += comments[i] + '\n';
+    }
+    document.getElementById('json-container').innerText = formattedJson;
+  });
+}
+
+/**
+ * changes the global variable that controls how many comments are displayed on
+ * the portfolio
+ */
+function changeNumberOfCommentsDisplayed(value) {
+  commentCount = value;
+  loadComments();
 }
 
 /** Creates an element that represents a comment*/

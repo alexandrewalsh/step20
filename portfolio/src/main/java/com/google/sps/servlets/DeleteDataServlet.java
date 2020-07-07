@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -30,9 +31,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 /** Servlet that deals with updating and displaying comments section.*/
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
+@WebServlet("/delete-data")
+public class DeleteDataServlet extends HttpServlet {
+
   private Gson gson = new Gson();
 
   // function called when /data is fetched (in myscript.js)
@@ -44,29 +47,15 @@ public class DataServlet extends HttpServlet {
     List<Entity> listOfComments = results.asList(
         FetchOptions.Builder.withLimit(Integer.parseInt(request.getParameter("number"))));
 
-    List<String> comments = new ArrayList<>();
+    List<Key> keys = new ArrayList<>();
 
     for (Entity entity : listOfComments) {
-      String comment = (String) entity.getProperty("user-comment");
-      comments.add(comment);
+      Key key = (Key) entity.getProperty("Key");
+      keys.add(key);
     }
 
-    response.setContentType("application/json");
-    response.getWriter().println(gson.toJson(comments));
+    datastore.delete(keys);
+
   }
-
-  // function called when POST is called (when button is pressed; see index.html)
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Entity commentEntity = new Entity("Comment");
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    String user_comment = request.getParameter("user-comment");
-    long timestamp = System.currentTimeMillis();
-
-    commentEntity.setProperty("user-comment", user_comment);
-    commentEntity.setProperty("timestamp", timestamp);
-    datastore.put(commentEntity);
-
-    response.sendRedirect("/index.html");
-  }
+  
 }
