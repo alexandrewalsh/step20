@@ -30,8 +30,8 @@ files under that directory.
     </walkthrough-editor-open-file>
     is an HTML file that will be rendered by the browser.
 -   <walkthrough-editor-open-file
-        filePath="step/portfolio/src/main/webapp/script.js">
-      script.js
+        filePath="step/portfolio/src/main/webapp/myscript.js">
+      myscript.js
     </walkthrough-editor-open-file>
     contains JavaScript that makes the page interactive.
 -   <walkthrough-editor-open-file
