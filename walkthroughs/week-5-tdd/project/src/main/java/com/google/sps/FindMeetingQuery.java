@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyend 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,10 +14,79 @@
 
 package com.google.sps;
 
-import java.util.Collection;
+import java.util.*;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+
+    int start = TimeRange.START_OF_DAY;
+    int end = TimeRange.END_OF_DAY;
+    long duration = request.getDuration();
+    LinkedList<TimeRange> reqTimes = new LinkedList<TimeRange>();
+    LinkedList<TimeRange> optTimes = new LinkedList<TimeRange>();
+
+    // assumes elements in events are in order 
+    for(Event e : events) {
+        // make sure this event contains relevant attendees
+        if (Collections.disjoint(e.getAttendees(), request.getAttendees())) {
+            continue;
+        }
+
+        end = e.getWhen().start();
+        // make sure event isn't nested in previous event
+        if (e.getWhen().end() < start) {
+            continue;
+        }
+
+        if (end - start >= duration) {
+            TimeRange validRange = TimeRange.fromStartEnd(start, end, false);
+            reqTimes.add(validRange);
+        }
+        start = e.getWhen().end();    
+    }
+
+    end = TimeRange.END_OF_DAY;
+    if (end - start > duration) {
+        TimeRange validRange = TimeRange.fromStartEnd(start, end, true);
+            reqTimes.add(validRange);
+    }
+
+    // run as above but considering both attendee list and optional attendees
+    start = TimeRange.START_OF_DAY;
+    end = TimeRange.END_OF_DAY;
+
+    for(Event e : events) {
+        // make sure this event contains relevant attendees
+        if (Collections.disjoint(e.getAttendees(), request.getAttendees())
+                && Collections.disjoint(e.getAttendees(), request.getOptionalAttendees())) {
+            continue;
+        }
+
+        end = e.getWhen().start();
+        // make sure event isn't nested in previous event
+        if (e.getWhen().end() < start) {
+            continue;
+        }
+
+        if (end - start >= duration) {
+            TimeRange validRange = TimeRange.fromStartEnd(start, end, false);
+            optTimes.add(validRange);
+        }
+        start = e.getWhen().end();    
+    }
+
+    end = TimeRange.END_OF_DAY;
+    if (end - start > duration) {
+        TimeRange validRange = TimeRange.fromStartEnd(start, end, true);
+            optTimes.add(validRange);
+    }
+
+
+    if(/*1+ time slots exists so that both mandatory and optional attendees can attend*/!optTimes.isEmpty()) {
+        /*return those timeslots*/
+        return optTimes;
+    }
+    /* return the time slots that fit just the mandatory attendees */
+    return reqTimes;
   }
 }

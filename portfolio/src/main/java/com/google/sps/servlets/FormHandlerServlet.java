@@ -40,7 +40,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/my-form-handler")
 public class FormHandlerServlet extends HttpServlet {
-
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the message entered by the user.
@@ -88,8 +87,9 @@ public class FormHandlerServlet extends HttpServlet {
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
 
-    // To support running in Google Cloud Shell with AppEngine's dev server, we must use the relative
-    // path to the image, rather than the path returned by imagesService which contains a host.
+    // To support running in Google Cloud Shell with AppEngine's dev server, we must use the
+    // relative path to the image, rather than the path returned by imagesService which contains a
+    // host.
     try {
       URL url = new URL(imagesService.getServingUrl(options));
       return url.getPath();

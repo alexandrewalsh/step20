@@ -12,9 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/**
- * Show random fact on page load
- */
+/** Show random fact on page load */
 const facts = [
   'I have been to Costa Rica',
   'This is my first internship',
@@ -44,22 +42,18 @@ const ans = [
 ];
 
 // variable to store the number of comments to load, default 10
-var commentCount = 10;
+let commentCount = 10;
 
 // stores the array pos of the current fact being displayed
 let currentFact = 0;
 
-/**
- * function to display the first fact upon loading the html page in
- */
+/** function to display the first fact upon loading the html page in */
 function firstFact() {  // eslint-line-disable no-unused-vars
   currentFact = Math.floor(Math.random() * facts.length);
   document.getElementById('fact-container').innerHTML = facts[currentFact];
 }
 
-/**
- * Responds based on whether "True" or "False" button is pressed
- */
+/** Responds based on whether "True" or "False" button is pressed */
 function buttonPressed(truePressed) {  // eslint-line-disable no-unused-vars
   const factContainer = document.getElementById('fact-container');
   const answerContainer = document.getElementById('answer-container');
@@ -107,24 +101,10 @@ getRandomQuoteUsingArrowFunctions() {  // eslint-line-disable no-unused-vars
  * database
  */
 function loadComments() {
-  fetchValue = '/data?number=' + commentCount;
+  const fetchValue = '/data?number=' + commentCount;
   fetch(fetchValue).then((response) => (response.json())).then((comments) => {
-    var formattedJson = ''
-    for (var i = 0; i < comments.length; i++) {
-      formattedJson += comments[i] + '\n';
-    }
-    document.getElementById('json-container').innerText = formattedJson;
-  });
-}
-
-/**
- * calls the DeleteDataServlet to delete all comments from the GCP database
- */
-function deleteComments() {
-    fetchValue = '/delete-data?number=' + commentCount;
-  fetch(fetchValue).then((response) => (response.json())).then((comments) => {
-    var formattedJson = ''
-    for (var i = 0; i < comments.length; i++) {
+    let formattedJson = '';
+    for (let i = 0; i < comments.length; i++) {
       formattedJson += comments[i] + '\n';
     }
     document.getElementById('json-container').innerText = formattedJson;
@@ -140,7 +120,7 @@ function changeNumberOfCommentsDisplayed(value) {
   loadComments();
 }
 
-/** Creates an element that represents a comment*/
+/** Creates an element that represents a comment */
 function createCommElement(comment) {
   const commElement = document.createElement('li');
   commElement.className = 'comment';
@@ -152,15 +132,98 @@ function createCommElement(comment) {
   return commElement;
 }
 
-/*
-function getDataFromServlet() {  // eslint-line-disable no-unused-vars
-  var formattedJson = "";
-  fetch('/data').then((response) => (response.json())).then((json) => {
-    for (var i = 0; i < json.length; i++) {
-      formattedJson += json[i] + '\n';
+/** Tab switching */
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName('tabcontent');
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = 'none';
+  }
+  tablinks = document.getElementsByClassName('tablinks');
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(' active', '');
+  }
+  document.getElementById(tabName).style.display = 'block';
+  evt.currentTarget.className += ' active';
+}
+
+function setFormUrl() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('imageForm');
+        messageForm.action = imageUploadUrl;
+        messageForm.classList.remove('hidden');
+      });
+}
+
+function start() {
+  loadComments();
+  setFormUrl();
+}
+
+
+/************************************************* */
+/*      Functions for capstone                     */
+/************************************************* */
+
+/**
+ * display database info
+ */
+function loadURLs() {
+  const fetchValue = '/url?number=' + commentCount;
+  fetch(fetchValue).then((response) => (response.json())).then((comments) => {
+    let formattedJson = '';
+    for (let i = 0; i < comments.length; i++) {
+      formattedJson += comments[i] + '\n';
     }
-    document.getElementById('json-container').innerText = formattedJson;
+    document.getElementById('json-container2').innerText = formattedJson;
   });
 }
 
-*/
+/**
+ * iframe:
+ */
+// This code loads the IFrame Player API code asynchronously.
+var tag = document.createElement('script');
+
+tag.src = 'https://www.youtube.com/iframe_api';
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// This function creates an <iframe> (and YouTube player)
+// after the API code downloads.
+var player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '390',
+    width: '640',
+    videoId: 'GltlJO56S1g',
+    events: {'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange}
+  });
+}
+
+// The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+  event.target.playVideo();
+}
+
+// The API calls this function when the player's state changes.
+// The function indicates that when playing a video (state=1),
+// the player should play for six seconds and then stop.
+var done = false;
+function onPlayerStateChange(event) {
+  if (event.data == YT.PlayerState.PLAYING && !done) {
+    setTimeout(seekVideo, 6000);
+    done = true;
+  }
+}
+function stopVideo() {
+  player.stopVideo();
+}
+function seekVideo() {
+    player.playVideo();
+    player.seekTo(60, true);
+}

@@ -32,15 +32,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that deals with updating and displaying comments section.*/
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
+@WebServlet("/url")
+public class UrlServlet extends HttpServlet {
   private Gson gson = new Gson();
 
-  // function called when /data is fetched (in myscript.js)
+  // function called when /url is fetched (in myscript.js)
   // reads from database
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    Query query = new Query("videoURL").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     List<Entity> listOfComments = results.asList(
@@ -49,7 +49,7 @@ public class DataServlet extends HttpServlet {
     List<String> comments = new ArrayList<>();
 
     for (Entity entity : listOfComments) {
-      String comment = (String) entity.getProperty("user-comment");
+      String comment = (String) entity.getProperty("user-submission");
       comments.add(comment);
     }
 
@@ -61,12 +61,12 @@ public class DataServlet extends HttpServlet {
   // writes to database
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Entity commentEntity = new Entity("Comment");
+    Entity commentEntity = new Entity("videoURL");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    String user_comment = request.getParameter("user-comment");
+    String user_comment = request.getParameter("user-submission");
     long timestamp = System.currentTimeMillis();
 
-    commentEntity.setProperty("user-comment", user_comment);
+    commentEntity.setProperty("user-submission", user_comment);
     commentEntity.setProperty("timestamp", timestamp);
     datastore.put(commentEntity);
 
@@ -74,6 +74,6 @@ public class DataServlet extends HttpServlet {
 
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
-    out.println("<script> openTab(event, 'Comments') </script>");
+    out.println("<script> openTab(event, 'Database Tests') </script>");
   }
 }
