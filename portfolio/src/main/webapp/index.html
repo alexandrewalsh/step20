@@ -113,10 +113,58 @@
           </script>
         </div>
       </div>
+        <br/><br/>
+
+        <form action="/dbTest" method="post">
+            <button type="submit">Submit</button>
+        </form>
+
     </div>
     <br />
 
-    <div id="player"></div>
-    <button onclick="seekVideo()">Skip to minute 1</button>
+    <form action="/addVideo" method="post">
+            <p>Add Video</p>
+            <input type="text" name="videoID" value="videoID" />
+            <input type="text" name="metadata" value="metadata"/>
+            <br />
+            <button type="submit">Submit</button>
+    </form>
+    <form action="/addClause" method="post">
+            <p>Add Clause</p>
+            <input type="text" name="videoID" value="videoID" />
+            <input type="text" name="keyphrase" value="keyphrase"/>
+            <input type="text" name="timestamps" value="1,2,3"/>
+            <br />
+            <button type="submit">Submit</button>
+    </form>
+    <form action="/addClauses" method="post">
+            <p>Add Clauses (Servlet not up yet)</p>
+            <input type="text" name="videoID" value="videoID" />
+
+            <br />
+            <button type="submit">Submit</button>
+    </form>
+    <form action="/addMetadata" method="post">
+            <p>Add Metadata</p>
+            <input type="text" name="videoID" value="videoID" />
+            <input type="text" name="metadata" value="metadata" />
+            <input type="checkbox" name="overwrite"/>
+            <label for="overwrite"> Overwrite </label>
+            <br />
+            <button type="submit">Submit</button>
+    </form>
+
+    <hr />
+
+    <button onclick="loadKeyword()">Load Keywords</button>
+    <br/>
+    <div id="allkeywords-container"></div>
+
+    <hr />
+
+    <button onclick="loadTimes()">Load Times for Keyword</button>
+    <br/>
+    <div id="keywordtimes-container"></div>
+    
   </body>
 </html>

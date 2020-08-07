@@ -227,3 +227,15 @@ function seekVideo() {
     player.playVideo();
     player.seekTo(60, true);
 }
+
+function loadKeyword() {
+fetch('/getAllKeywords').then((response) => (response.text())).then((quote) => {
+document.getElementById('allkeywords-container').innerText = quote;
+  });
+}
+
+function loadTimes() {
+fetch('/getTimesForKeyword').then((response) => (response.text())).then((quote) => {
+document.getElementById('keywordtimes-container').innerText = quote;
+  });
+}
